@@ -1,0 +1,401 @@
+import React, { useState, useEffect } from "react";
+import { 
+  Table, 
+  Form, 
+  Input, 
+  Select, 
+  Button, 
+  Modal, 
+  message, 
+  Card, 
+  Row, 
+  Col, 
+  Statistic, 
+  Tabs, 
+  Progress, 
+  Tag,
+  Space,
+  Tooltip,
+  Typography,
+  Divider,
+  Badge,
+  Alert,
+  Spin,
+  Timeline,
+  List,
+  Avatar,
+  Rate,
+  Switch,
+  Slider,
+  InputNumber,
+  DatePicker,
+  Calendar,
+  Empty,
+  Skeleton,
+  Affix,
+  BackTop
+} from "antd";
+import { 
+  PlusOutlined, 
+  EditOutlined, 
+  DeleteOutlined, 
+  BarChartOutlined, 
+  PieChartOutlined,
+  LineChartOutlined,
+  RiseOutlined,
+  FallOutlined,
+  DollarOutlined,
+  TrophyOutlined,
+  AimOutlined,
+  DownloadOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+  SettingOutlined,
+  BellOutlined,
+  StarOutlined,
+  HeartOutlined,
+  ShareAltOutlined,
+  BookOutlined,
+  BulbOutlined,
+  ThunderboltOutlined,
+  FireOutlined,
+  CrownOutlined,
+  RocketOutlined,
+  WalletOutlined,
+  SafetyOutlined,
+  TeamOutlined,
+  GlobalOutlined,
+  CalendarOutlined,
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+  ExclamationCircleOutlined,
+  InfoCircleOutlined,
+  WarningOutlined,
+  SyncOutlined,
+  FilterOutlined,
+  SearchOutlined,
+  SortAscendingOutlined,
+  SortDescendingOutlined,
+  MoreOutlined,
+  MenuOutlined,
+  AppstoreOutlined,
+  DashboardOutlined,
+  FundOutlined,
+  StockOutlined,
+  BankOutlined,
+  GoldOutlined,
+  HomeOutlined,
+  CarOutlined,
+  ShopOutlined,
+  GiftOutlined,
+  ExperimentOutlined,
+  ApiOutlined,
+  CloudOutlined,
+  DatabaseOutlined,
+  FileTextOutlined,
+  PrinterOutlined,
+  SendOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  MessageOutlined,
+  CommentOutlined,
+  LikeOutlined,
+  DislikeOutlined,
+  FlagOutlined,
+  TagsOutlined,
+  TagOutlined,
+  BarcodeOutlined,
+  QrcodeOutlined,
+  ScanOutlined,
+  CameraOutlined,
+  PictureOutlined,
+  FileImageOutlined,
+  FilePdfOutlined,
+  FileExcelOutlined,
+  FileWordOutlined,
+  FilePptOutlined,
+  FileZipOutlined,
+  FileOutlined,
+  FolderOutlined,
+  FolderOpenOutlined,
+  FolderAddOutlined,
+  InboxOutlined,
+  OutboxOutlined,
+  CopyOutlined,
+  ScissorOutlined,
+  UndoOutlined,
+  RedoOutlined,
+  SaveOutlined
+} from "@ant-design/icons";
+import { 
+  LineChart, 
+  Line, 
+  AreaChart, 
+  Area, 
+  BarChart, 
+  Bar, 
+  PieChart, 
+  Pie, 
+  Cell, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip as RechartsTooltip, 
+  Legend, 
+  ResponsiveContainer,
+  ComposedChart
+} from "recharts";
+import axios from "axios";
+import Layout from "./../components/Layout/Layout";
+
+const { Option } = Select;
+const { TabPane } = Tabs;
+const { Title, Text } = Typography;
+
+// Theme palette (subtle, green-focused)
+const THEME = {
+  pageBg: '#f5f8f6',
+  cardBg: '#ffffff',
+  subtleCard: '#f6faf6',
+  primary: '#2E8B57', // main green
+  success: '#228B22',
+  danger: '#e74c3c',
+  muted: '#56606a'
+};
+
+
+
+const HomePage = () => {
+  const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editingAsset, setEditingAsset] = useState(null);
+  const [form] = Form.useForm();
+  const [analytics, setAnalytics] = useState({
+    overview: {
+      totalAssets: 0,
+      totalInvestment: 0,
+      totalCurrentValue: 0,
+      totalProfitLoss: 0,
+      overallReturnPercentage: 0,
+      profitableAssets: 0,
+      lossMakingAssets: 0,
+    },
+    assetTypeDistribution: {},
+    topPerformers: [],
+    worstPerformers: [],
+    monthlyPerformance: [],
+    riskMetrics: {}
+  });
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notificationsLocal, setNotificationsLocal] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [recModalVisible, setRecModalVisible] = useState(false);
+  const [recForSymbol, setRecForSymbol] = useState(null);
+  const [recText, setRecText] = useState("");
+  const [goalModalVisible, setGoalModalVisible] = useState(false);
+  const [reports, setReports] = useState({
+    summary: null,
+    performance: null,
+    diversification: null,
+    detailed: null
+  });
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false);
+  const [currentReport, setCurrentReport] = useState(null);
+  const [realTimeData, setRealTimeData] = useState([]);
+  const [isRealTimeEnabled, setIsRealTimeEnabled] = useState(false);
+  const [goals, setGoals] = useState([]);
+  const [watchlist, setWatchlist] = useState([]);
+  const [marketNews, setMarketNews] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [investmentGoals, setInvestmentGoals] = useState({
+    targetAmount: 0,
+    currentAmount: 0,
+    targetDate: null,
+    monthlyContribution: 0
+  });
+  const [riskProfile, setRiskProfile] = useState('Moderate');
+  const [preferences, setPreferences] = useState({
+    theme: 'light',
+    notifications: true,
+    autoRefresh: true,
+    currency: 'INR'
+  });
+
+  // Active top-level tab (for styling)
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // subtle card styles
+  const minimalCardStyle = {
+    background: THEME.cardBg,
+    border: '1px solid #e8efe8',
+    borderRadius: '8px',
+    boxShadow: '0 6px 18px rgba(34,41,47,0.06)'
+  };
+  const subtleCardStyle = {
+    background: THEME.subtleCard,
+    border: '1px solid #e8efe8',
+    borderRadius: '12px',
+    boxShadow: '0 6px 18px rgba(34,41,47,0.04)'
+  };
+
+  useEffect(() => {
+    // load persisted small pieces from localStorage
+    const storedNotifs = JSON.parse(localStorage.getItem('sms_notifications') || '[]');
+    const storedRecs = JSON.parse(localStorage.getItem('sms_recommendations') || '[]');
+    const storedGoals = JSON.parse(localStorage.getItem('sms_goals') || 'null');
+    if (storedNotifs && storedNotifs.length) setNotificationsLocal(storedNotifs);
+    if (storedRecs && storedRecs.length) setRecommendations(storedRecs);
+    if (storedGoals) setInvestmentGoals(storedGoals);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('sms_notifications', JSON.stringify(notificationsLocal));
+  }, [notificationsLocal]);
+
+  useEffect(() => {
+    localStorage.setItem('sms_recommendations', JSON.stringify(recommendations));
+  }, [recommendations]);
+
+  useEffect(() => {
+    localStorage.setItem('sms_goals', JSON.stringify(investmentGoals));
+  }, [investmentGoals]);
+
+ 
+
+  const fetchAssets = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/portfolio/get-all-assets", {
+        userId: user._id,
+      });
+      const enriched = (data.assets || []).map(a => {
+        const qty = Number(a.quantity || 0);
+        const purchase = Number(a.purchasePrice || 0);
+        const current = Number(a.currentPrice || 0);
+        const totalValue = qty * current;
+        const investment = qty * purchase;
+        const profitLoss = totalValue - investment;
+        const profitLossPercentage = investment > 0 ? (profitLoss / investment) * 100 : 0;
+        return { ...a, totalValue, investment, profitLoss, profitLossPercentage };
+      });
+      setAssets(enriched);
+      
+      // Fetch analytics
+      const analyticsData = await axios.post("/portfolio/get-portfolio-analytics", {
+        userId: user._id,
+      });
+      // compute top/worst performers from enriched assets if backend doesn't provide
+      const profits = enriched.filter(a => a.profitLoss > 0).sort((x,y) => y.profitLoss - x.profitLoss);
+      const losses = enriched.filter(a => a.profitLoss < 0).sort((x,y) => x.profitLoss - y.profitLoss); // most negative first
+
+      const serverAnalytics = analyticsData.data.analytics || {};
+      serverAnalytics.topPerformers = profits;
+      serverAnalytics.worstPerformers = losses;
+      serverAnalytics.monthlyPerformance = serverAnalytics.monthlyPerformance || [];
+      setAnalytics(serverAnalytics);
+    } catch (error) {
+      message.error("Failed to fetch portfolio data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAssets();
+  }, []);
+
+  const handleAddAsset = () => {
+    setEditingAsset(null);
+    form.resetFields();
+    setIsModalVisible(true);
+  };
+
+  const handleEdit = (asset) => {
+    setEditingAsset(asset);
+    form.setFieldsValue({
+      ...asset,
+      purchaseDate: asset.purchaseDate ? new Date(asset.purchaseDate).toISOString().split('T')[0] : undefined,
+    });
+    setIsModalVisible(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/portfolio/delete-asset/${id}`);
+      message.success("Asset deleted successfully");
+      fetchAssets();
+    } catch (error) {
+      message.error("Failed to delete asset");
+    }
+  };
+
+  // Table columns (placed after handlers so callbacks are defined)
+  const columns = [
+    { title: 'Asset Name', dataIndex: 'assetName', key: 'assetName', sorter: (a,b) => a.assetName.localeCompare(b.assetName) },
+    { title: 'Type', dataIndex: 'assetType', key: 'assetType', render: t => <Tag color="blue">{t}</Tag> },
+    { title: 'Quantity', dataIndex: 'quantity', key: 'quantity' },
+    { title: 'Purchase Price', dataIndex: 'purchasePrice', key: 'purchasePrice', render: p => `₹${Number(p).toFixed(2)}` },
+    { title: 'Current Price', dataIndex: 'currentPrice', key: 'currentPrice', render: p => `₹${Number(p).toFixed(2)}` },
+    { title: 'Total Value', key: 'totalValue', render: (_, r) => `₹${(((Number(r.quantity)||0) * (Number(r.currentPrice)||0))).toFixed(2)}` },
+    { title: 'P&L', key: 'profitLoss', render: (_, r) => {
+        const qty = Number(r.quantity)||0; const pur = Number(r.purchasePrice)||0; const cur = Number(r.currentPrice)||0;
+        const invest = qty * pur; const val = qty * cur; const pl = val - invest; const pct = invest>0? (pl/invest)*100:0;
+        const color = pl>0? THEME.success : pl<0? THEME.danger : THEME.muted;
+        return (<div><div style={{color,fontWeight:'bold'}}>{pl!==0? `${pl>0?'+':'-'}₹${Math.abs(pl).toFixed(2)}`:'-'}</div><div style={{color,fontSize:12}}>{invest>0? `${pl>0?'+':''}${Math.abs(pct).toFixed(2)}%`:'-'}</div></div>);
+      }},
+    { title: 'Status', dataIndex: 'status', key: 'status', render: s => <Tag color={s==='Active'?'green': s==='Sold'?'red':'orange'}>{s}</Tag> },
+    { title: 'Actions', key: 'actions', render: (_, r) => (<Space><Tooltip title="Edit"><Button type="primary" icon={<EditOutlined />} size="small" onClick={()=>handleEdit(r)} /></Tooltip><Tooltip title="Delete"><Button danger icon={<DeleteOutlined />} size="small" onClick={()=>handleDelete(r._id)} /></Tooltip></Space>) }
+  ];
+
+  const handleSubmit = async (values) => {
+    try {
+      const payload = {
+        ...values,
+        userId: user._id,
+      };
+
+      if (editingAsset) {
+        await axios.put(`/portfolio/update-asset/${editingAsset._id}`, payload);
+        message.success("Asset updated successfully");
+      } else {
+        await axios.post("/portfolio/add-asset", payload);
+        message.success("Asset added successfully");
+      }
+
+      setIsModalVisible(false);
+      form.resetFields();
+      fetchAssets();
+    } catch (error) {
+      message.error("Failed to save asset");
+    }
+  };
+
+  const generateReport = async (reportType) => {
+    try {
+      const { data } = await axios.post("/portfolio/get-portfolio-report", {
+        userId: user._id,
+        reportType,
+      });
+      
+      setCurrentReport({ type: reportType, data: data.reportData });
+      setReports(prev => ({ ...prev, [reportType]: data.reportData }));
+      setIsReportModalVisible(true);
+      message.success(`${reportType} report generated successfully`);
+    } catch (error) {
+      message.error("Failed to generate report");
+    }
+  };
+
+  // Real-time data simulation - Improved with actual price updates
+  useEffect(() => {
+    if (isRealTimeEnabled) {
+      const interval = setInterval(async () => {
+        try {
+          // Fetch fresh data from server instead of just simulating
+          await fetchAssets();
+          message.success('Portfolio data refreshed', 1);
+        } catch (error) {
+          console.error('Failed to refresh data:', error);

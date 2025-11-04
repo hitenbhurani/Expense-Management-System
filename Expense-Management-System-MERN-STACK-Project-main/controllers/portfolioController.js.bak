@@ -1,0 +1,20 @@
+const assetModel = require("../models/assetModel");
+
+// Get all assets for a user
+const getAllAssetsController = async (req, res) => {
+  try {
+    const assets = await assetModel
+      .find({ user: req.body.userId })
+      .sort({ createdAt: -1 });
+    
+    res.status(200).json({
+      success: true,
+      assets,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

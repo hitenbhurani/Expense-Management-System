@@ -1,0 +1,62 @@
+/* Global styles to prevent black bars */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow-x: hidden;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* Remove any default borders or outlines */
+.navbar {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Ensure no black bars in content areas */
+.content {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+/* Fix for any potential black bars in cards */
+.ant-card {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ant-tabs {
+  border: none !important;
+}
+
+.ant-tabs-content-holder {
+  border: none !important;
+}
+
+/* Remove any default browser styling that might cause black bars */
+::before,
+::after {
+  border: none !important;
+  outline: none !important;
+}
+
+
