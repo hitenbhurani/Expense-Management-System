@@ -1,0 +1,289 @@
+/* Reset */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Vibrant, modern palette */
+  --bg: #e8f5e9;        /* soft mint green background */
+  --card: #ffffff;      /* pure white for cards */
+  --muted-card: #f1f8e9; /* very light green for subtle cards */
+  --primary: #2e7d32;   /* rich forest green */
+  --accent: #00c853;    /* vibrant accent green */
+  --success: #00e676;   /* bright success green */
+  --danger: #ff5252;    /* vivid danger red */
+  --muted: #37474f;     /* deep blue-grey for text */
+  --glass: rgba(255,255,255,0.85);
+  --shadow: 0 8px 24px rgba(46,125,50,0.08);
+  
+  /* Additional theme colors */
+  --gradient-start: #43a047;
+  --gradient-end: #1b5e20;
+  --highlight: #b9f6ca;
+}
+
+html, body, #root {
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--highlight) 100%);
+  color: #1f2933;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-attachment: fixed;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  padding: 24px;
+}
+
+/* Card utilities */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.04);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.card--subtle {
+  background: var(--muted-card);
+}
+
+/* Buttons */
+.btn-flat {
+  border-radius: 8px;
+  border: none;
+  padding: 8px 12px;
+}
+
+/* Header */
+.app-navbar {
+  background: transparent;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(15,23,42,0.04);
+}
+.app-brand {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.app-nav .nav-link {
+  color: var(--muted);
+  margin-left: 12px;
+}
+
+/* Footer */
+.app-footer {
+  padding: 14px 18px;
+  text-align: center;
+  color: rgba(17,24,39,0.7);
+  border-top: 1px solid rgba(15,23,42,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(246,248,247,1));
+}
+
+/* Profit / Loss text helpers */
+.pl-positive { color: var(--success); font-weight: 700; }
+.pl-negative { color: var(--danger); font-weight: 700; }
+.muted { color: var(--muted); }
+
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: 20px;
+}
+
+.auth-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 440px;
+  transition: transform 0.3s ease;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.brand-title {
+  color: #2e7d32;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.bank-icon {
+  font-size: 36px;
+}
+
+.auth-subtitle {
+  color: #666;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.auth-form {
+  margin-top: 24px;
+}
+
+.form-label {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required-star {
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+.input-icon {
+  margin-right: 8px;
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.auth-input {
+  height: 42px;
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+}
+
+.auth-input:hover,
+.auth-input:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1);
+}
+
+.auth-options {
+  margin: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-submit-btn {
+  height: 42px;
+  background: #2e7d32 !important;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: all 0.3s ease;
+}
+
+.auth-submit-btn:hover,
+.auth-submit-btn:focus {
+  background: #1b5e20 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+}
+
+.auth-links {
+  margin-top: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-link {
+  color: #2e7d32;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+  color: #1b5e20;
+}
+
+.admin-link {
+  color: #666;
+  font-size: 13px;
+}
+
+.admin-link:hover {
+  color: #333;
+}
+
+.content {
+  min-height: 80vh;
+}
+
+/* Dashboard hero */
+.dashboard-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(23,105,74,0.08), rgba(255,255,255,0.95));
+  border: 1px solid rgba(23,105,74,0.07);
+}
+.dashboard-hero .title {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard-hero .title h1 {
+  color: var(--muted);
+  font-size: 2.25rem;
+  margin-bottom: 4px;
+}
+.dashboard-hero .title p {
+  color: rgba(27,38,34,0.7);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.stat-card {
+  background: linear-gradient(180deg, var(--card), var(--muted-card));
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(34,41,47,0.05);
+  border: 1px solid rgba(15,23,42,0.03);
+}
+.stat-card .value { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+.stat-card .label { color: rgba(17,24,39,0.6); margin-bottom: 8px; }
+
+.tab-pill { border-radius: 10px; padding: 6px 10px; }
+.tab-pill.active { background: linear-gradient(90deg, rgba(46,139,87,0.08), rgba(102,126,234,0.06)); border: 1px solid rgba(46,139,87,0.06); }
+
+.btn-gradient {
+  background: linear-gradient(90deg, #3b82f6, #7c3aed);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.12);
+  border-radius: 8px;
+}
+
+/* small helpers for report tags */
+.report-success { color: var(--success); font-weight: 700; }
+.report-danger { color: var(--danger); font-weight: 700; }
